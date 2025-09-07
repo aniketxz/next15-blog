@@ -3,6 +3,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { prisma } from '@/lib/prisma'
 import { Suspense } from 'react'
 
+export const revalidate = 60
+
 const getData = async () => {
 	await new Promise((resolve) => setTimeout(resolve, 2000))
 	const data = await prisma.blogPost.findMany({
@@ -26,9 +28,7 @@ export default function Home() {
 	return (
 		<div className='py-6'>
 			<h1 className='text-3xl font-bold tracking-tight mb-8'>Latest posts</h1>
-			<Suspense
-				fallback={<BlogPostsGrid />}
-			>
+			<Suspense fallback={<BlogPostsGrid />}>
 				<BlogPosts />
 			</Suspense>
 		</div>
